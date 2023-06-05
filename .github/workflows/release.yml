@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2         
+      - name: Release Changelog Builder
+        uses: mikepenz/release-changelog-builder-action@v4.0.0-b01
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -21,6 +23,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: ${{ github.ref }}.md
+          body: ${{steps.github_release.outputs.changelog}}
           draft: false
           prerelease: false
